@@ -1,0 +1,56 @@
+.panel {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.text {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.subText {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  max-width: 480px;
+}
+
+.mutedIcon {
+  color: var(--color-text-muted);
+}
+
+.spinner {
+  color: var(--color-primary);
+  animation: spin 0.9s linear infinite;
+}
+
+.errorPanel {
+  border-color: #f1c8c3;
+  background: #fdf6f5;
+}
+
+.errorIcon {
+  color: var(--color-negative-text);
+}
+
+.actions {
+  margin-top: 6px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

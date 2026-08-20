@@ -1,0 +1,11 @@
+.card {
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.chartWrap {
+  width: 100%;
+}

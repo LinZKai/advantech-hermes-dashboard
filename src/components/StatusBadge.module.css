@@ -1,0 +1,64 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.positive {
+  background: var(--color-positive-bg);
+  color: var(--color-positive-text);
+}
+
+.warning {
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+}
+
+.negative {
+  background: var(--color-negative-bg);
+  color: var(--color-negative-text);
+}
+
+.neutral {
+  background: var(--color-neutral-bg);
+  color: var(--color-neutral-text);
+}
+
+.primary {
+  background: #e6edf9;
+  color: var(--color-primary);
+}
+
+.confidenceWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 96px;
+}
+
+.confidenceTrack {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-neutral-bg);
+  overflow: hidden;
+}
+
+.confidenceFill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+}
+
+.confidenceValue {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  min-width: 34px;
+  text-align: right;
+}

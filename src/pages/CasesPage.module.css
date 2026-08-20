@@ -1,0 +1,93 @@
+.card {
+  padding: 18px 20px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.select {
+  padding: 7px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-card);
+  color: var(--color-text);
+  font-size: 13px;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.table th {
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.row {
+  cursor: pointer;
+  transition: background-color 0.12s ease;
+}
+
+.row:hover {
+  background: var(--color-bg);
+}
+
+.row:last-child td {
+  border-bottom: none;
+}
+
+.titleCell {
+  font-weight: 600;
+  white-space: normal;
+  min-width: 200px;
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+.feedbackSummary {
+  display: inline-flex;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.helpfulCount {
+  color: var(--color-positive-text);
+}
+
+.negativeCount {
+  color: var(--color-negative-text);
+}
+
+.totalCount {
+  color: var(--color-text-muted);
+  font-weight: 500;
+}

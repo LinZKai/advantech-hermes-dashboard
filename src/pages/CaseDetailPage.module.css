@@ -1,0 +1,143 @@
+.summaryCard {
+  padding: 20px 22px;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 18px;
+}
+
+.summaryLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 6px;
+}
+
+.summaryValue {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.timelineCard {
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.turn {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.turn:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.bubbleUser,
+.bubbleHermes {
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+}
+
+.bubbleUser {
+  background: var(--color-bg);
+}
+
+.bubbleHermes {
+  background: #eef3fa;
+}
+
+.bubbleLabel {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 6px;
+}
+
+.bubbleText {
+  font-size: 13.5px;
+  color: var(--color-text);
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.retrievalRow {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.turnTime {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.feedbackList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.feedbackItem {
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  border-left: 3px solid transparent;
+}
+
+.feedbackHelpful {
+  background: var(--color-positive-bg);
+  border-left-color: var(--color-positive-text);
+}
+
+.feedbackNegative {
+  background: var(--color-negative-bg);
+  border-left-color: var(--color-negative-text);
+}
+
+.feedbackHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.feedbackTime {
+  margin-left: auto;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.feedbackReason {
+  margin-top: 4px;
+  font-size: 12.5px;
+  color: var(--color-text-secondary);
+}
+
+.feedbackSuggestion {
+  margin-top: 4px;
+  font-size: 12.5px;
+  color: var(--color-text);
+  font-style: italic;
+}
