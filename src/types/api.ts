@@ -80,6 +80,7 @@ export interface CaseListItem {
     negative_count: number
   }
   latest_activity: string | null
+  latest_feedback_submitted_at: string | null
 }
 
 // ---------- GET /cases/{case_id} ----------

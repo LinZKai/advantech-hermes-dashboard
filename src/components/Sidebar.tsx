@@ -5,7 +5,7 @@ import styles from './Sidebar.module.css'
 
 const NAV_ITEMS = [
   { to: '/', label: 'Overview', icon: LayoutDashboard, end: true },
-  { to: '/cases', label: 'Cases', icon: FolderKanban, end: false },
+  { to: '/cases', label: 'Cases & Feedback', icon: FolderKanban, end: false },
   { to: '/improvements', label: 'Improvements', icon: Lightbulb, end: false },
 ]
 
