@@ -123,7 +123,7 @@ export function CasesPage() {
                 onChange={(e) => setFeedbackFilter(e.target.value as FeedbackFilter)}
                 className={styles.select}
               >
-                <option value="all">All Feedback</option>
+                <option value="all">All Cases</option>
                 <option value="with">With Feedback</option>
                 <option value="positive">Positive</option>
                 <option value="negative">Negative</option>
