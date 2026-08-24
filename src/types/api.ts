@@ -224,9 +224,36 @@ export interface ProposalReviewRequest {
   status: 'accepted' | 'rejected'
 }
 
+// Status values tools.run_curator.CuratorRunOutcome.status can carry --
+// "succeeded"/"no_change_recommended" are the two successful outcomes,
+// every other value is a Curator failure that did NOT roll back the
+// Proposal Accept itself (see dashboard_api.app._run_curator_after_accept).
+export type CuratorRunStatus =
+  | 'succeeded'
+  | 'no_change_recommended'
+  | 'proposal_not_found'
+  | 'not_accepted'
+  | 'wrong_target'
+  | 'no_observation'
+  | 'agents_file_unreadable'
+  | 'input_failed'
+  | 'analyzer_failed'
+  | 'persistence_failed'
+
+export interface CuratorRunResult {
+  status: CuratorRunStatus
+  change_id: string | null
+  change_type: CuratorChangeType | null
+  confidence: number | null
+  error: string | null
+}
+
 export interface ProposalReviewResponse {
   status: 'reviewed'
   proposal_id: string
+  // Present only when the request accepted the proposal -- Curator is
+  // invoked automatically right after Accept commits. Absent on reject.
+  curator?: CuratorRunResult
 }
 
 export interface CuratorReviewRequest {
@@ -234,8 +261,14 @@ export interface CuratorReviewRequest {
 }
 
 export interface CuratorReviewResponse {
-  status: 'reviewed'
+  // "applied" when an approve request's automatic apply step succeeded;
+  // plain "reviewed" for a reject (apply is never invoked on reject).
+  // If approve succeeds but the automatic apply step fails an apply guard
+  // (e.g. source_changed), the API responds with a non-2xx status instead
+  // of this shape -- see ApiErrorDetail.
+  status: 'reviewed' | 'applied'
   change_id: string
+  applied_at?: string | null
 }
 
 export interface CuratorApplyResponse {

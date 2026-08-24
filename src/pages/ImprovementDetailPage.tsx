@@ -22,14 +22,19 @@ interface ActionState {
 
 const IDLE: ActionState = { loading: false, error: null }
 
+// Matches tools.run_curator.CuratorRunOutcome's own two successful
+// statuses -- everything else is a Curator failure that must still be
+// shown, even though the Proposal Accept it followed already succeeded.
+const CURATOR_SUCCESS_STATUSES = new Set(['succeeded', 'no_change_recommended'])
+
 export function ImprovementDetailPage() {
   const { proposalId } = useParams<{ proposalId: string }>()
   const navigate = useNavigate()
   const state = useApiData(() => api.getImprovement(proposalId!), [proposalId])
 
   const [proposalAction, setProposalAction] = useState<ActionState>(IDLE)
+  const [curatorGenerationWarning, setCuratorGenerationWarning] = useState<string | null>(null)
   const [curatorReviewAction, setCuratorReviewAction] = useState<ActionState>(IDLE)
-  const [curatorApplyAction, setCuratorApplyAction] = useState<ActionState>(IDLE)
 
   const backButton = (
     <button className="btn btn-outline" onClick={() => navigate('/improvements')}>
@@ -71,9 +76,16 @@ export function ImprovementDetailPage() {
     const verb = status === 'accepted' ? '接受 (Accept)' : '拒絕 (Reject)'
     if (!window.confirm(`確定要${verb}此 improvement proposal 嗎?`)) return
     setProposalAction({ loading: true, error: null })
+    setCuratorGenerationWarning(null)
     try {
-      await api.reviewProposal(proposal.proposal_id, status)
+      const result = await api.reviewProposal(proposal.proposal_id, status)
       setProposalAction(IDLE)
+      if (result.curator && !CURATOR_SUCCESS_STATUSES.has(result.curator.status)) {
+        setCuratorGenerationWarning(
+          `Proposal 已成功 Accept,但 Curator 執行失敗（${result.curator.status}）` +
+            (result.curator.error ? `：${result.curator.error}` : ''),
+        )
+      }
       state.refetch()
     } catch (err) {
       setProposalAction({ loading: false, error: err instanceof Error ? err.message : String(err) })
@@ -82,8 +94,11 @@ export function ImprovementDetailPage() {
 
   async function handleCuratorReview(status: 'approved' | 'rejected') {
     if (!latestCuratorChange) return
-    const verb = status === 'approved' ? '核准 (Approve)' : '拒絕 (Reject)'
-    if (!window.confirm(`確定要${verb}此 Curator change 嗎?`)) return
+    const confirmMessage =
+      status === 'approved'
+        ? 'Approving this change will immediately apply it to the runtime AGENTS configuration. 確定要核准嗎?'
+        : '確定要拒絕 (Reject) 此 Curator change 嗎?'
+    if (!window.confirm(confirmMessage)) return
     setCuratorReviewAction({ loading: true, error: null })
     try {
       await api.reviewCuratorChange(latestCuratorChange.change_id, status)
@@ -91,19 +106,6 @@ export function ImprovementDetailPage() {
       state.refetch()
     } catch (err) {
       setCuratorReviewAction({ loading: false, error: err instanceof Error ? err.message : String(err) })
-    }
-  }
-
-  async function handleCuratorApply() {
-    if (!latestCuratorChange) return
-    if (!window.confirm('This will update the runtime AGENTS configuration. 確定要套用嗎?')) return
-    setCuratorApplyAction({ loading: true, error: null })
-    try {
-      await api.applyCuratorChange(latestCuratorChange.change_id)
-      setCuratorApplyAction(IDLE)
-      state.refetch()
-    } catch (err) {
-      setCuratorApplyAction({ loading: false, error: err instanceof Error ? err.message : String(err) })
     }
   }
 
@@ -147,6 +149,7 @@ export function ImprovementDetailPage() {
           </div>
         )}
         {proposalAction.error && <p className={styles.actionError}>{proposalAction.error}</p>}
+        {curatorGenerationWarning && <p className={styles.actionError}>{curatorGenerationWarning}</p>}
       </div>
 
       {/* Observation */}
@@ -241,15 +244,6 @@ export function ImprovementDetailPage() {
               </div>
             )}
             {curatorReviewAction.error && <p className={styles.actionError}>{curatorReviewAction.error}</p>}
-
-            {latestCuratorChange.status === 'approved' && (
-              <div className={styles.actionRow}>
-                <button className="btn btn-accent" disabled={curatorApplyAction.loading} onClick={handleCuratorApply}>
-                  Apply to Runtime
-                </button>
-              </div>
-            )}
-            {curatorApplyAction.error && <p className={styles.actionError}>{curatorApplyAction.error}</p>}
 
             {latestCuratorChange.status === 'applied' && (
               <div className={styles.appliedRow}>
